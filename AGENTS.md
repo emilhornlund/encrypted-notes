@@ -5,8 +5,8 @@
 - **Build all**: `yarn build`
 - **Build single package**: `yarn workspace @encrypted-notes/<package> run build`
 - **Dev all**: `yarn dev` (runs API + web concurrently)
-- **Dev API**: `yarn dev:api`
-- **Dev web**: `yarn dev:web`
+- **Dev API**: `yarn workspace @encrypted-notes/api run start:dev`
+- **Dev web**: `yarn workspace @encrypted-notes/web run dev`
 - **Lint all**: `yarn lint`
 - **Lint single**: `yarn workspace @encrypted-notes/<package> run lint`
 - **Lint fix**: `yarn lint:fix`
@@ -16,12 +16,15 @@
 - **Test single file**: `yarn workspace @encrypted-notes/<package> run test -- <test-file>` (Jest) or `yarn workspace @encrypted-notes/<package> run test <test-file>` (Vitest)
 - **Test with pattern**: `yarn workspace @encrypted-notes/api run test -- --testNamePattern="<pattern>"` (Jest) or `yarn workspace @encrypted-notes/<package> run test --run --reporter=verbose <pattern>` (Vitest)
 - **Test coverage**: `yarn workspace @encrypted-notes/<package> run test:ci`
+- **Test e2e**: `yarn workspace @encrypted-notes/web run test:e2e` (Playwright)
 - **Type check**: `yarn typecheck`
 - **Clean**: `yarn clean`
+- **Database migrations**: `yarn workspace @encrypted-notes/api run migration:generate/run/revert`
+- **Seed database**: `yarn workspace @encrypted-notes/api run seed`
 
 ## Code Style
 
-- **Language**: TypeScript (strict mode)
+- **Language**: TypeScript (strict mode: noImplicitAny, strictNullChecks, strictBindCallApply)
 - **Imports**: ES6 imports, group external libraries first, then internal modules (absolute paths preferred)
 - **Formatting**: Prettier (semi: true, singleQuote: true, tabWidth: 2, printWidth: 80, trailingComma: es5)
 - **Editor**: 2-space indentation, UTF-8, LF line endings, final newlines, trim trailing whitespace
