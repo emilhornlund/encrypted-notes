@@ -17,6 +17,7 @@ import {
   Save as SaveIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../hooks/useAuth';
+import { cryptoService } from '../../services/crypto.service';
 import {
   CreateNoteRequest,
   UpdateNoteRequest,
@@ -26,7 +27,7 @@ import {
 export const NoteEditor: React.FC = () => {
   const { id: noteId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, userKeys } = useAuth();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,13 +37,13 @@ export const NoteEditor: React.FC = () => {
 
   // Load existing note if editing
   useEffect(() => {
-    if (noteId && token) {
+    if (noteId && token && userKeys) {
       loadNote();
     }
-  }, [noteId, token]);
+  }, [noteId, token, userKeys]);
 
   const loadNote = async () => {
-    if (!token || !noteId) return;
+    if (!token || !noteId || !userKeys) return;
 
     setLoading(true);
     setError(null);
@@ -60,12 +61,22 @@ export const NoteEditor: React.FC = () => {
 
       const note: NoteResponse = await response.json();
 
-      // For now, we can't decrypt the content in the frontend
-      // This is a placeholder - we'll need crypto integration
-      setTitle(`Encrypted Note ${note.id.slice(0, 8)}`);
-      setBody(
-        'Note content will be displayed here once crypto integration is complete.'
+      // Decrypt the note content
+      const encryptedData = {
+        titleCt: note.titleCt,
+        ivTitle: note.ivTitle,
+        bodyCt: note.bodyCt,
+        ivBody: note.ivBody,
+        termHashes: [], // Not needed for decryption
+      };
+
+      const { title, body } = await cryptoService.decryptNote(
+        encryptedData,
+        userKeys
       );
+
+      setTitle(title);
+      setBody(body);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load note');
     } finally {
@@ -74,25 +85,25 @@ export const NoteEditor: React.FC = () => {
   };
 
   const handleSave = async () => {
-    if (!token) return;
+    if (!token || !userKeys) return;
 
     setSaving(true);
     setError(null);
 
     try {
-      // For now, create placeholder encrypted data
-      // This will be replaced with actual crypto operations
-      const titleCt = new Uint8Array(Buffer.from(title));
-      const ivTitle = crypto.getRandomValues(new Uint8Array(12));
-      const bodyCt = new Uint8Array(Buffer.from(body));
-      const ivBody = crypto.getRandomValues(new Uint8Array(12));
+      // Encrypt the note content
+      const encryptedData = await cryptoService.encryptNote(
+        title,
+        body,
+        userKeys
+      );
 
       const noteData: CreateNoteRequest | UpdateNoteRequest = {
-        titleCt,
-        ivTitle,
-        bodyCt,
-        ivBody,
-        termHashes: [], // Will be populated with search terms
+        titleCt: encryptedData.titleCt as any,
+        ivTitle: encryptedData.ivTitle as any,
+        bodyCt: encryptedData.bodyCt as any,
+        ivBody: encryptedData.ivBody as any,
+        termHashes: encryptedData.termHashes as any,
       };
 
       let response: Response;

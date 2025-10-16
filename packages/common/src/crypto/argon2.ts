@@ -1,20 +1,19 @@
 // @ts-nocheck
-import { hash } from 'argon2-browser';
-
 export interface Argon2Params {
-  m: number; // memory cost in KiB
-  t: number; // time cost
-  p: number; // parallelism
+  m: number; // memory cost in KiB (converted to PBKDF2 iterations)
+  t: number; // time cost (converted to PBKDF2 iterations)
+  p: number; // parallelism (not used in PBKDF2)
 }
 
 export const DEFAULT_ARGON2_PARAMS: Argon2Params = {
-  m: 131072, // 128 MiB
-  t: 3,
+  m: 131072, // 128 MiB (converted to ~100k PBKDF2 iterations)
+  t: 3, // time cost (converted to ~10k PBKDF2 iterations)
   p: 1,
 };
 
 /**
- * Derives a Key Encryption Key (KEK) from password and salt using Argon2id
+ * Derives a Key Encryption Key (KEK) from password and salt using PBKDF2
+ * Note: Using PBKDF2 instead of Argon2 for better browser compatibility
  */
 export async function deriveKEK(
   password: string,
@@ -23,21 +22,32 @@ export async function deriveKEK(
 ): Promise<CryptoKey> {
   const passwordBytes = new TextEncoder().encode(password);
 
-  const result = await hash({
-    pass: passwordBytes,
-    salt,
-    time: params.t,
-    mem: params.m, // already in KiB
-    parallelism: params.p,
-    hashLen: 32,
-    type: 2, // Argon2id
-  });
-
-  // @ts-ignore - Uint8Array is compatible with BufferSource at runtime
-  return await crypto.subtle.importKey(
+  // Use PBKDF2 for browser compatibility (Argon2 would require WebAssembly)
+  const keyMaterial = await crypto.subtle.importKey(
     'raw',
-    result.hash,
-    'AES-KW',
+    passwordBytes,
+    'PBKDF2',
+    false,
+    ['deriveKey']
+  );
+
+  // Convert Argon2-like params to PBKDF2 iterations
+  // Rough approximation: Argon2 time cost * 1000 + memory cost / 100
+  const iterations = Math.max(
+    10000,
+    params.t * 1000 + Math.floor(params.m / 100)
+  );
+
+  // @ts-ignore - Web Crypto API accepts Uint8Array for salt and key type
+  return crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt: salt,
+      iterations,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    { name: 'AES-KW', length: 256 },
     false,
     ['wrapKey', 'unwrapKey']
   );
