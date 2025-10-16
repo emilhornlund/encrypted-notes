@@ -1,24 +1,43 @@
 # AGENTS.md
 
 ## Commands
-- **Build**: `npm run build`
-- **Lint**: `npm run lint`
-- **Test all**: `npm test`
-- **Test single**: `npm test -- <test-file-path>` or `npm test -- --testNamePattern="<test-name>"`
-- **Type check**: `npm run type-check` (if available) or `npx tsc --noEmit`
+
+- **Build all**: `yarn build`
+- **Build single package**: `yarn workspace @encrypted-notes/<package> run build`
+- **Dev all**: `yarn dev` (runs API + web concurrently)
+- **Dev API**: `yarn dev:api`
+- **Dev web**: `yarn dev:web`
+- **Lint all**: `yarn lint`
+- **Lint single**: `yarn workspace @encrypted-notes/<package> run lint`
+- **Lint fix**: `yarn lint:fix`
+- **Format**: `yarn format`
+- **Test all**: `yarn test`
+- **Test single package**: `yarn workspace @encrypted-notes/<package> run test`
+- **Test single file**: `yarn workspace @encrypted-notes/<package> run test -- <test-file>` (Jest) or `yarn workspace @encrypted-notes/<package> run test <test-file>` (Vitest)
+- **Test with pattern**: `yarn workspace @encrypted-notes/api run test -- --testNamePattern="<pattern>"` (Jest) or `yarn workspace @encrypted-notes/<package> run test --run --reporter=verbose <pattern>` (Vitest)
+- **Test coverage**: `yarn workspace @encrypted-notes/<package> run test:ci`
+- **Type check**: `yarn typecheck`
+- **Clean**: `yarn clean`
 
 ## Code Style
-- **Language**: TypeScript/JavaScript
-- **Imports**: Use ES6 imports, group by external libraries first, then internal modules
-- **Formatting**: Use Prettier with 2-space indentation
-- **Types**: Strict TypeScript with no `any` types except for external APIs
-- **Naming**: camelCase for variables/functions, PascalCase for classes/components
-- **Error handling**: Use try/catch for async operations, throw descriptive errors
-- **Security**: Never log sensitive data, use crypto APIs properly for encryption
-- **Comments**: Add JSDoc for public APIs, avoid inline comments for obvious code
+
+- **Language**: TypeScript (strict mode)
+- **Imports**: ES6 imports, group external libraries first, then internal modules (absolute paths preferred)
+- **Formatting**: Prettier (semi: true, singleQuote: true, tabWidth: 2, printWidth: 80, trailingComma: es5)
+- **Editor**: 2-space indentation, UTF-8, LF line endings, final newlines, trim trailing whitespace
+- **Types**: Strict TypeScript, no `any` types except for external APIs, explicit return types
+- **Naming**: camelCase for variables/functions/methods, PascalCase for classes/components/interfaces, UPPER_SNAKE_CASE for constants
+- **Error handling**: try/catch for async operations, throw descriptive Error objects, validate inputs with Zod schemas
+- **Security**: Never log passwords/keys/plaintext, use Web Crypto API or Node.js crypto, zeroize sensitive data, validate all inputs
+- **Comments**: JSDoc for public APIs only, avoid inline comments for obvious code, document complex crypto operations
+- **Linting**: ESLint with TypeScript rules, no unused vars (except prefixed with \_), warn on console.log
 
 ## Architecture
-- **Encryption**: Use Web Crypto API or Node.js crypto for all encryption operations
-- **State**: Immutable state updates, avoid direct mutation
-- **Components**: Functional components with hooks, avoid class components
-- **Testing**: Unit tests for utilities, integration tests for components
+
+- **Monorepo**: Yarn workspaces (common/api/web packages)
+- **Backend**: NestJS with TypeORM, PostgreSQL, JWT auth, REST API
+- **Frontend**: React with Vite, Material-UI, React Query, functional components with hooks
+- **Encryption**: End-to-end AES-GCM + HKDF + Argon2id + HMAC-SHA256, client-side crypto, server never sees plaintext
+- **State**: Immutable updates, React Query for server state, avoid direct mutation
+- **Testing**: Vitest (common/web), Jest (api), Playwright (e2e), coverage reporting
+- **Validation**: Zod schemas for runtime validation, class-validator for API DTOs
