@@ -16,6 +16,7 @@
     "test": "yarn workspace @encrypted-notes/common run test && yarn workspace @encrypted-notes/api run test && yarn workspace @encrypted-notes/web run test",
     "test:ci": "yarn workspace @encrypted-notes/common run test:ci && yarn workspace @encrypted-notes/api run test:ci && yarn workspace @encrypted-notes/web run test:ci",
     "typecheck": "yarn workspace @encrypted-notes/common run typecheck && yarn workspace @encrypted-notes/api run typecheck && yarn workspace @encrypted-notes/web run typecheck",
+    "verify": "yarn lint && yarn build && yarn typecheck && yarn test",
     "clean": "yarn workspace @encrypted-notes/common run clean && yarn workspace @encrypted-notes/api run clean && yarn workspace @encrypted-notes/web run clean"
   },
   "devDependencies": {

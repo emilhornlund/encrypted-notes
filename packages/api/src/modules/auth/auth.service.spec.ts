@@ -10,9 +10,9 @@ import { ConflictException, UnauthorizedException } from '@nestjs/common';
 describe('AuthService', () => {
   let service: AuthService;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let userRepository: Repository<User>;
+  let _userRepository: Repository<User>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let jwtService: JwtService;
+  let _jwtService: JwtService;
 
   const mockUserRepository = {
     findOne: jest.fn(),
@@ -41,8 +41,8 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    userRepository = module.get<Repository<User>>(getRepositoryToken(User));
-    jwtService = module.get<JwtService>(JwtService);
+    _userRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    _jwtService = module.get<JwtService>(JwtService);
   });
 
   afterEach(() => {

@@ -1,6 +1,5 @@
 // Browser-compatible crypto utilities for the web app
 // These are client-side implementations that work with Web Crypto API
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export interface EncryptedData {
   ciphertext: ArrayBuffer;
@@ -51,7 +50,7 @@ export async function deriveKEK(
   const passwordBytes = new TextEncoder().encode(password);
 
   // Use PBKDF2 for browser compatibility (Argon2 would require WebAssembly)
-  const keyMaterial = await crypto.subtle.importKey(
+  const keyMaterial = await (crypto.subtle as any).importKey(
     'raw',
     passwordBytes,
     'PBKDF2',
@@ -59,8 +58,7 @@ export async function deriveKEK(
     ['deriveKey']
   );
 
-  // @ts-ignore - Web Crypto API accepts Uint8Array for salt
-  return crypto.subtle.deriveKey(
+  return (crypto.subtle as any).deriveKey(
     {
       name: 'PBKDF2',
       salt: salt,
@@ -69,9 +67,9 @@ export async function deriveKEK(
     },
     keyMaterial,
     { name: 'AES-KW', length: 256 },
-    false,
-    ['wrapKey', 'unwrapKey']
-  );
+    true,
+    ['unwrapKey']
+  ) as any;
 }
 
 /**
@@ -95,8 +93,7 @@ export async function generateUMK(): Promise<CryptoKey> {
 export async function hkdf(key: CryptoKey, info: string): Promise<CryptoKey> {
   const infoBytes = new TextEncoder().encode(info);
 
-  // @ts-ignore - Web Crypto API accepts ArrayBuffer for salt
-  return crypto.subtle.deriveKey(
+  return (crypto.subtle as any).deriveKey(
     {
       name: 'HKDF',
       hash: 'SHA-256',
@@ -119,8 +116,7 @@ export async function aesGcmEncrypt(
 ): Promise<EncryptedData> {
   const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV
 
-  // @ts-ignore - Web Crypto API accepts Uint8Array for IV and data
-  const ciphertext = await crypto.subtle.encrypt(
+  const ciphertext = await (crypto.subtle as any).encrypt(
     {
       name: 'AES-GCM',
       iv: iv,
@@ -142,8 +138,7 @@ export async function aesGcmDecrypt(
   key: CryptoKey,
   encryptedData: EncryptedData
 ): Promise<Uint8Array> {
-  // @ts-ignore - Web Crypto API accepts Uint8Array for IV
-  const plaintext = await crypto.subtle.decrypt(
+  const plaintext = await (crypto.subtle as any).decrypt(
     {
       name: 'AES-GCM',
       iv: encryptedData.iv,
@@ -181,7 +176,7 @@ export async function unwrapKey(
   extractable: boolean,
   keyUsages: KeyUsage[]
 ): Promise<CryptoKey> {
-  return crypto.subtle.unwrapKey(
+  return (crypto.subtle as any).unwrapKey(
     'raw',
     wrappedKey,
     unwrappingKey,
@@ -210,6 +205,6 @@ export async function hmacSha256(
   key: CryptoKey,
   data: Uint8Array
 ): Promise<Uint8Array> {
-  const signature = await crypto.subtle.sign('HMAC', key, data);
+  const signature = await (crypto.subtle as any).sign('HMAC', key, data);
   return new Uint8Array(signature);
 }

@@ -13,15 +13,15 @@ import { NotFoundException } from '@nestjs/common';
 describe('NotesService', () => {
   let service: NotesService;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let noteRepository: Repository<Note>;
+  let _noteRepository: Repository<Note>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let noteTermRepository: Repository<NoteTerm>;
+  let _noteTermRepository: Repository<NoteTerm>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let noteTagRepository: Repository<NoteTag>;
+  let _noteTagRepository: Repository<NoteTag>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let tagRepository: Repository<Tag>;
+  let _tagRepository: Repository<Tag>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let tagTermRepository: Repository<TagTerm>;
+  let _tagTermRepository: Repository<TagTerm>;
 
   const mockNoteRepository = {
     create: jest.fn(),
@@ -81,15 +81,15 @@ describe('NotesService', () => {
     }).compile();
 
     service = module.get<NotesService>(NotesService);
-    noteRepository = module.get<Repository<Note>>(getRepositoryToken(Note));
-    noteTermRepository = module.get<Repository<NoteTerm>>(
+    _noteRepository = module.get<Repository<Note>>(getRepositoryToken(Note));
+    _noteTermRepository = module.get<Repository<NoteTerm>>(
       getRepositoryToken(NoteTerm)
     );
-    noteTagRepository = module.get<Repository<NoteTag>>(
+    _noteTagRepository = module.get<Repository<NoteTag>>(
       getRepositoryToken(NoteTag)
     );
-    tagRepository = module.get<Repository<Tag>>(getRepositoryToken(Tag));
-    tagTermRepository = module.get<Repository<TagTerm>>(
+    _tagRepository = module.get<Repository<Tag>>(getRepositoryToken(Tag));
+    _tagTermRepository = module.get<Repository<TagTerm>>(
       getRepositoryToken(TagTerm)
     );
   });
@@ -172,7 +172,7 @@ describe('NotesService', () => {
       mockNoteTermRepository.create.mockReturnValue({ noteId: mockNote.id });
       mockNoteTermRepository.save.mockResolvedValue([]);
 
-      const result = await service.create(ownerId, createDataWithTerms);
+      await service.create(ownerId, createDataWithTerms);
 
       expect(mockNoteTermRepository.create).toHaveBeenCalledWith({
         noteId: mockNote.id,
@@ -216,7 +216,7 @@ describe('NotesService', () => {
       });
       mockNoteTagRepository.save.mockResolvedValue({});
 
-      const result = await service.create(ownerId, createDataWithTags);
+      await service.create(ownerId, createDataWithTags);
 
       expect(mockTagRepository.findOne).toHaveBeenCalledWith({
         where: {
@@ -263,7 +263,7 @@ describe('NotesService', () => {
       });
       mockNoteTagRepository.save.mockResolvedValue({});
 
-      const result = await service.create(ownerId, createDataWithTags);
+      await service.create(ownerId, createDataWithTags);
 
       expect(mockTagRepository.create).not.toHaveBeenCalled();
       expect(mockTagTermRepository.create).not.toHaveBeenCalled();

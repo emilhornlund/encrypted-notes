@@ -6,7 +6,7 @@ import { UnauthorizedException } from '@nestjs/common';
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let authService: AuthService;
+  let _authService: AuthService;
 
   const mockAuthService = {
     validateUser: jest.fn(),
@@ -24,7 +24,7 @@ describe('JwtStrategy', () => {
     }).compile();
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
-    authService = module.get<AuthService>(AuthService);
+    _authService = module.get<AuthService>(AuthService);
   });
 
   afterEach(() => {

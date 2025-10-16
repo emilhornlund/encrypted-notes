@@ -40,11 +40,11 @@ jobs:
     - name: Lint
       run: yarn lint
 
-    - name: Type check
-      run: yarn typecheck
-
     - name: Build packages
       run: yarn build
+
+    - name: Type check
+      run: yarn typecheck
 
     - name: Run tests
       run: yarn test:ci

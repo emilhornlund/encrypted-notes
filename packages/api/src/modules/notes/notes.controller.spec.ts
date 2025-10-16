@@ -10,7 +10,7 @@ import {
 describe('NotesController', () => {
   let controller: NotesController;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let notesService: NotesService;
+  let _notesService: NotesService;
 
   const mockNotesService = {
     create: jest.fn(),
@@ -34,7 +34,7 @@ describe('NotesController', () => {
     }).compile();
 
     controller = module.get<NotesController>(NotesController);
-    notesService = module.get<NotesService>(NotesService);
+    _notesService = module.get<NotesService>(NotesService);
   });
 
   afterEach(() => {

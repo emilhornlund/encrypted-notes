@@ -6,7 +6,7 @@ import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 describe('AuthController', () => {
   let controller: AuthController;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let authService: AuthService;
+  let _authService: AuthService;
 
   const mockAuthService = {
     register: jest.fn(),
@@ -25,7 +25,7 @@ describe('AuthController', () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
-    authService = module.get<AuthService>(AuthService);
+    _authService = module.get<AuthService>(AuthService);
   });
 
   afterEach(() => {

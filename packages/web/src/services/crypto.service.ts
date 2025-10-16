@@ -38,7 +38,10 @@ export class CryptoService {
   /**
    * Derives user keys from password and salt
    */
-  async deriveUserKeys(password: string, salt: Uint8Array): Promise<UserKeys> {
+  async deriveUserKeys(
+    _password: string,
+    _salt: Uint8Array
+  ): Promise<UserKeys> {
     try {
       // Generate User Master Key
       const umk = await this.cryptoWorker.generateUMK();

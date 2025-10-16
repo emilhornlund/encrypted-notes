@@ -33,7 +33,7 @@
 - **Error handling**: try/catch for async operations, throw descriptive Error objects, validate inputs with Zod schemas
 - **Security**: Never log passwords/keys/plaintext, use Web Crypto API or Node.js crypto, zeroize sensitive data, validate all inputs
 - **Comments**: JSDoc for public APIs only, avoid inline comments for obvious code, document complex crypto operations
-- **Linting**: ESLint with TypeScript rules, no unused vars (except prefixed with \_), warn on console.log
+- **Linting**: ESLint with TypeScript rules, no unused vars (except prefixed with \_), warn on console.log (up to 20 warnings allowed). CI enforces linting on all PRs and pushes.
 
 ## Architecture
 
@@ -44,3 +44,23 @@
 - **State**: Immutable updates, React Query for server state, avoid direct mutation
 - **Testing**: Vitest (common/web), Jest (api), Playwright (e2e), coverage reporting
 - **Validation**: Zod schemas for runtime validation, class-validator for API DTOs
+
+## Quality Gate (Definition of Done)
+
+Before completing any task, ALWAYS ensure the project passes:
+
+1) yarn lint
+2) yarn build
+3) yarn typecheck
+4) yarn test
+
+### Agent workflow
+
+- After making changes, run: yarn verify
+- If any step fails, FIX THE CODE and rerun yarn verify until all pass.
+- Only then present the final result.
+
+### Scope
+
+- Apply to the entire repo (all workspaces).
+- Never skip tests, lint, or type checks. Do not disable rules to “make it pass.”
