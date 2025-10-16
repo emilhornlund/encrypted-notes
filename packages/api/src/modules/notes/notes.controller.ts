@@ -1,0 +1,126 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  Request,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
+import { NotesService } from './notes.service';
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import {
+  CreateNoteRequest,
+  UpdateNoteRequest,
+  BatchNotesRequest,
+  NotesListResponse,
+  NoteResponse,
+  BatchNotesResponse,
+} from '@encrypted-notes/common';
+
+@ApiTags('notes')
+@ApiBearerAuth()
+@Controller('notes')
+@UseGuards(JwtAuthGuard)
+export class NotesController {
+  constructor(private readonly _notesService: NotesService) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new note' })
+  @ApiResponse({ status: 201, description: 'Note created successfully' })
+  @ApiResponse({ status: 400, description: 'Invalid request data' })
+  async create(
+    @Request() req: any,
+    @Body() createNoteData: CreateNoteRequest
+  ): Promise<NoteResponse> {
+    return this._notesService.create(req.user.userId, createNoteData);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get paginated list of notes' })
+  @ApiResponse({ status: 200, description: 'Notes retrieved successfully' })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'cursor', required: false, type: String })
+  async findAll(
+    @Request() req: any,
+    @Query('limit') limit?: string,
+    @Query('cursor') cursor?: string
+  ): Promise<NotesListResponse> {
+    const limitNum = limit ? parseInt(limit, 10) : 50;
+    return this._notesService.findAll(req.user.userId, limitNum, cursor);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a specific note by ID' })
+  @ApiResponse({ status: 200, description: 'Note retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Note not found' })
+  async findOne(
+    @Request() req: any,
+    @Param('id') noteId: string
+  ): Promise<NoteResponse> {
+    return this._notesService.findOne(req.user.userId, noteId);
+  }
+
+  @Post('batch')
+  @ApiOperation({ summary: 'Get multiple notes by IDs' })
+  @ApiResponse({ status: 200, description: 'Notes retrieved successfully' })
+  async findByIds(
+    @Request() req: any,
+    @Body() batchRequest: BatchNotesRequest
+  ): Promise<BatchNotesResponse> {
+    return this._notesService.findByIds(req.user.userId, batchRequest.ids);
+  }
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Update a note' })
+  @ApiResponse({ status: 200, description: 'Note updated successfully' })
+  @ApiResponse({ status: 404, description: 'Note not found' })
+  async update(
+    @Request() req: any,
+    @Param('id') noteId: string,
+    @Body() updateNoteData: UpdateNoteRequest
+  ): Promise<NoteResponse> {
+    return this._notesService.update(req.user.userId, noteId, updateNoteData);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a note' })
+  @ApiResponse({ status: 204, description: 'Note deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Note not found' })
+  async remove(
+    @Request() req: any,
+    @Param('id') noteId: string
+  ): Promise<void> {
+    return this._notesService.remove(req.user.userId, noteId);
+  }
+
+  @Post('search')
+  @ApiOperation({ summary: 'Search notes using blind indexing' })
+  @ApiResponse({
+    status: 200,
+    description: 'Search results retrieved successfully',
+  })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  async search(
+    @Request() req: any,
+    @Body() termHashes: Uint8Array[],
+    @Query('limit') limit?: string
+  ): Promise<NotesListResponse> {
+    const limitNum = limit ? parseInt(limit, 10) : 50;
+    return this._notesService.search(req.user.userId, termHashes, limitNum);
+  }
+}

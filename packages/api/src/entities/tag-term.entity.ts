@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
+import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { Tag } from './tag.entity';
 
 @Entity('tag_terms')
@@ -10,7 +10,7 @@ export class TagTerm {
   @PrimaryColumn({ type: 'bytea' })
   termHash: Buffer;
 
-  @ManyToOne(() => Tag, tag => tag.terms, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Tag, (tag) => tag.terms, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'tagId' })
   tag: Tag;
 }

@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { HealthModule } from './modules/health/health.module';
+import { NotesModule } from './modules/notes/notes.module';
 import { User } from './entities/user.entity';
 import { Note } from './entities/note.entity';
 import { NoteTerm } from './entities/note-term.entity';
-import { Tag } from './entities/tag.entity';
 import { NoteTag } from './entities/note-tag.entity';
+import { Tag } from './entities/tag.entity';
 import { TagTerm } from './entities/tag-term.entity';
 
 @Module({
@@ -24,6 +25,7 @@ import { TagTerm } from './entities/tag-term.entity';
     }),
     AuthModule,
     HealthModule,
+    NotesModule,
   ],
 })
 export class AppModule {}

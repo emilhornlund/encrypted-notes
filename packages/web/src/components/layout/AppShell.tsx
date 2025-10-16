@@ -1,19 +1,23 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material'
-import { useAuth } from '../../hooks/useAuth'
-import { Sidebar } from './Sidebar'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useAuth } from '../../hooks/useAuth';
+import { Sidebar } from './Sidebar';
+import { NotesList } from '../notes/NotesList';
+import { NoteEditor } from '../notes/NoteEditor';
 
-const NotesPage = () => <div>Notes Page - Coming Soon</div>
-const TagsPage = () => <div>Tags Page - Coming Soon</div>
-const SearchPage = () => <div>Search Page - Coming Soon</div>
+const TagsPage = () => <div>Tags Page - Coming Soon</div>;
+const SearchPage = () => <div>Search Page - Coming Soon</div>;
 
 export const MainLayout: React.FC = () => {
-  const { logout, user } = useAuth()
+  const { logout, user } = useAuth();
 
   return (
     <Box sx={{ display: 'flex', height: '100vh' }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Encrypted Notes
@@ -31,12 +35,14 @@ export const MainLayout: React.FC = () => {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 8 }}>
         <Routes>
-          <Route path="/" element={<NotesPage />} />
-          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/" element={<NotesList />} />
+          <Route path="/notes" element={<NotesList />} />
+          <Route path="/notes/new" element={<NoteEditor />} />
+          <Route path="/notes/:id" element={<NoteEditor />} />
           <Route path="/tags" element={<TagsPage />} />
           <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Box>
     </Box>
-  )
-}
+  );
+};

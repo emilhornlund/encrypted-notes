@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,15 +14,19 @@ import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 export class AuthService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
-    private jwtService: JwtService,
+    private _userRepository: Repository<User>,
+    private _jwtService: JwtService
   ) {}
 
-  async register(registerData: RegisterRequest): Promise<{ accessToken: string }> {
+  async register(
+    registerData: RegisterRequest
+  ): Promise<{ accessToken: string }> {
     const { email, password } = registerData;
 
     // Check if user already exists
-    const existingUser = await this.userRepository.findOne({ where: { email } });
+    const existingUser = await this._userRepository.findOne({
+      where: { email },
+    });
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }
@@ -37,7 +45,7 @@ export class AuthService {
     // For now, create a placeholder wrapped UMK (will be set by client after registration)
     const placeholderUMK = crypto.getRandomValues(new Uint8Array(32));
 
-    const user = this.userRepository.create({
+    const user = this._userRepository.create({
       email,
       passwordHash,
       salt: Buffer.from(salt),
@@ -45,11 +53,11 @@ export class AuthService {
       wrappedUMK: Buffer.from(placeholderUMK),
     });
 
-    await this.userRepository.save(user);
+    await this._userRepository.save(user);
 
     // Generate access token
     const payload = { sub: user.id, email: user.email };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this._jwtService.sign(payload);
 
     return { accessToken };
   }
@@ -57,7 +65,7 @@ export class AuthService {
   async login(loginData: LoginRequest): Promise<{ accessToken: string }> {
     const { email, password } = loginData;
 
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this._userRepository.findOne({ where: { email } });
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -68,17 +76,22 @@ export class AuthService {
     }
 
     const payload = { sub: user.id, email: user.email };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this._jwtService.sign(payload);
 
     return { accessToken };
   }
 
   async validateUser(userId: string): Promise<User | null> {
-    return this.userRepository.findOne({ where: { id: userId } });
+    return this._userRepository.findOne({ where: { id: userId } });
   }
 
-  async updateWrappedUMK(userId: string, wrappedUMK: Buffer, salt: Buffer, argon2Params: any): Promise<void> {
-    await this.userRepository.update(userId, {
+  async updateWrappedUMK(
+    userId: string,
+    wrappedUMK: Buffer,
+    salt: Buffer,
+    argon2Params: any
+  ): Promise<void> {
+    await this._userRepository.update(userId, {
       wrappedUMK,
       salt,
       argon2Params,

@@ -1,12 +1,12 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly _authService: AuthService) {}
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
@@ -14,7 +14,7 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   @ApiResponse({ status: 409, description: 'User already exists' })
   async register(@Body() registerData: RegisterRequest) {
-    return this.authService.register(registerData);
+    return this._authService.register(registerData);
   }
 
   @Post('login')
@@ -23,6 +23,6 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginData: LoginRequest) {
-    return this.authService.login(loginData);
+    return this._authService.login(loginData);
   }
 }
