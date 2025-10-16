@@ -215,6 +215,28 @@ export class CryptoService {
   }
 
   /**
+   * Unwraps stored UMK and derives user keys
+   */
+  async unwrapAndDeriveUserKeys(
+    wrappedKey: WrappedKey,
+    password: string
+  ): Promise<UserKeys> {
+    try {
+      // Unwrap the UMK
+      const umk = await this.unwrapUMK(wrappedKey, password);
+
+      // Derive content and search keys from UMK
+      const contentKey = await this.cryptoWorker.hkdf(umk, 'content');
+      const searchKey = await this.cryptoWorker.hkdf(umk, 'search');
+
+      return { umk, contentKey, searchKey };
+    } catch (error) {
+      console.error('Failed to unwrap and derive user keys:', error);
+      throw new Error('Key unwrapping failed');
+    }
+  }
+
+  /**
    * Generates a new salt for key derivation
    */
   async generateSalt(length: number = 32): Promise<Uint8Array> {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -8,27 +8,28 @@ import {
   Typography,
   Box,
   Alert,
-} from '@mui/material'
-import { useAuth } from '../../hooks/useAuth'
+} from '@mui/material';
+import { useAuth } from '../../hooks/useAuth';
 
 export const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const { login, isLoading } = useAuth()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
     try {
-      await login(email, password)
-      navigate('/')
+      await login(email, password);
+      navigate('/');
     } catch (err) {
-      setError('Login failed. Please check your credentials.')
+      console.error('Login error:', err);
+      setError('Login failed. Please check your credentials.');
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -98,5 +99,5 @@ export const LoginPage: React.FC = () => {
         </Paper>
       </Box>
     </Container>
-  )
-}
+  );
+};

@@ -90,8 +90,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(userInfo);
       }
 
-      // Derive and store user keys
-      await deriveAndStoreUserKeys(password);
+      // Derive and store user keys (don't fail login if this fails)
+      try {
+        await deriveAndStoreUserKeys(password, true);
+      } catch (cryptoError) {
+        console.warn(
+          'Crypto key derivation failed, but login succeeded:',
+          cryptoError
+        );
+        // Don't fail the login if crypto fails - user can still use basic features
+      }
     } finally {
       setIsLoading(false);
     }
@@ -121,33 +129,82 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       // Derive and store user keys for new user
-      await deriveAndStoreUserKeys(password);
+      try {
+        await deriveAndStoreUserKeys(password, false);
+      } catch (cryptoError) {
+        console.warn(
+          'Crypto key derivation failed during registration:',
+          cryptoError
+        );
+        // Don't fail registration if crypto fails - user can still register
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const deriveAndStoreUserKeys = async (password: string) => {
+  const deriveAndStoreUserKeys = async (password: string, isLogin = false) => {
     try {
-      // Generate salt for key derivation
-      const salt = await cryptoService.generateSalt();
+      let keys: UserKeys;
 
-      // Derive user keys from password
-      const keys = await cryptoService.deriveUserKeys(password, salt);
+      if (isLogin) {
+        // For login, try to unwrap stored UMK
+        const storedWrappedKey = localStorage.getItem('wrapped_umk');
+        if (storedWrappedKey) {
+          try {
+            const wrappedKeyData = JSON.parse(storedWrappedKey);
+            const wrappedKey: any = {
+              wrappedKey: new Uint8Array(wrappedKeyData.wrappedKey),
+              salt: new Uint8Array(wrappedKeyData.salt),
+              params: wrappedKeyData.params,
+            };
+
+            // Unwrap and derive keys from stored UMK
+            keys = await cryptoService.unwrapAndDeriveUserKeys(
+              wrappedKey,
+              password
+            );
+          } catch (unwrapError) {
+            console.warn(
+              'Failed to unwrap stored keys, generating new ones:',
+              unwrapError
+            );
+            // If unwrapping fails, generate new keys
+            const salt = await cryptoService.generateSalt();
+            keys = await cryptoService.deriveUserKeys(password, salt);
+          }
+        } else {
+          console.warn(
+            'No stored wrapped key found for login, generating new keys'
+          );
+          // No stored key, generate new one
+          const salt = await cryptoService.generateSalt();
+          keys = await cryptoService.deriveUserKeys(password, salt);
+        }
+      } else {
+        // For registration, generate new keys
+        const salt = await cryptoService.generateSalt();
+        keys = await cryptoService.deriveUserKeys(password, salt);
+
+        // Wrap UMK for secure storage
+        const wrappedKey = await cryptoService.wrapUMK(
+          keys.umk,
+          password,
+          salt
+        );
+
+        // Store wrapped key securely
+        localStorage.setItem(
+          'wrapped_umk',
+          JSON.stringify({
+            wrappedKey: Array.from(wrappedKey.wrappedKey),
+            salt: Array.from(wrappedKey.salt),
+            params: wrappedKey.params,
+          })
+        );
+      }
+
       setUserKeys(keys);
-
-      // Wrap UMK for secure storage
-      const wrappedKey = await cryptoService.wrapUMK(keys.umk, password, salt);
-
-      // Store wrapped key securely
-      localStorage.setItem(
-        'wrapped_umk',
-        JSON.stringify({
-          wrappedKey: Array.from(wrappedKey.wrappedKey),
-          salt: Array.from(wrappedKey.salt),
-          params: wrappedKey.params,
-        })
-      );
     } catch (error) {
       console.error('Failed to derive and store user keys:', error);
       throw new Error('Key derivation failed');

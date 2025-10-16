@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -8,38 +8,39 @@ import {
   Typography,
   Box,
   Alert,
-} from '@mui/material'
-import { useAuth } from '../../hooks/useAuth'
+} from '@mui/material';
+import { useAuth } from '../../hooks/useAuth';
 
 export const RegisterPage: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const { register, isLoading } = useAuth()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const { register, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      return
+      setError('Passwords do not match');
+      return;
     }
 
     if (password.length < 8) {
-      setError('Password must be at least 8 characters long')
-      return
+      setError('Password must be at least 8 characters long');
+      return;
     }
 
     try {
-      await register(email, password)
-      navigate('/')
+      await register(email, password);
+      navigate('/');
     } catch (err) {
-      setError('Registration failed. Please try again.')
+      console.error('Registration error:', err);
+      setError('Registration failed. Please try again.');
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -122,5 +123,5 @@ export const RegisterPage: React.FC = () => {
         </Paper>
       </Box>
     </Container>
-  )
-}
+  );
+};
