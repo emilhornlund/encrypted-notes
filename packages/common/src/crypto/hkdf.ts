@@ -4,7 +4,8 @@
 export async function hkdf(
   key: CryptoKey,
   info: string,
-  length: number = 32
+  length: number = 32,
+  extractable: boolean = false
 ): Promise<CryptoKey> {
   const infoBytes = new TextEncoder().encode(info);
 
@@ -52,21 +53,21 @@ export async function hkdf(
     'raw',
     derivedKey,
     'AES-GCM',
-    false,
+    extractable,
     ['encrypt', 'decrypt']
   );
 }
 
 /**
- * Generates a User Master Key (UMK)
+ * Generates a User Master Key (UMK) as an HMAC key for HKDF
  */
 export async function generateUMK(): Promise<CryptoKey> {
   const keyData = crypto.getRandomValues(new Uint8Array(32));
   return await crypto.subtle.importKey(
     'raw',
     keyData,
-    'HKDF',
-    false,
-    ['deriveKey']
+    { name: 'HMAC', hash: 'SHA-256' },
+    true, // extractable for testing
+    ['sign']
   );
 }

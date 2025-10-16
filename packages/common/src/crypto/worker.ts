@@ -5,14 +5,24 @@ import { WrappedKey, Argon2Params, EncryptedData } from './types';
  * Interface for crypto operations that can be run in a Web Worker
  */
 export interface CryptoWorker {
-  deriveKEK(password: string, salt: Uint8Array, params?: Argon2Params): Promise<CryptoKey>;
-  wrapUMK(umk: CryptoKey, kek: CryptoKey): Promise<WrappedKey>;
-  unwrapUMK(wrappedKey: WrappedKey, kek: CryptoKey): Promise<CryptoKey>;
-  hkdf(key: CryptoKey, info: string, length?: number): Promise<CryptoKey>;
-  aesGcmEncrypt(key: CryptoKey, plaintext: Uint8Array): Promise<EncryptedData>;
-  aesGcmDecrypt(key: CryptoKey, encryptedData: EncryptedData): Promise<Uint8Array>;
+  deriveKEK(
+    _password: string,
+    _salt: Uint8Array,
+    _params?: Argon2Params
+  ): Promise<CryptoKey>;
+  wrapUMK(_umk: CryptoKey, _kek: CryptoKey): Promise<WrappedKey>;
+  unwrapUMK(_wrappedKey: WrappedKey, _kek: CryptoKey): Promise<CryptoKey>;
+  hkdf(_key: CryptoKey, _info: string, _length?: number): Promise<CryptoKey>;
+  aesGcmEncrypt(
+    _key: CryptoKey,
+    _plaintext: Uint8Array
+  ): Promise<EncryptedData>;
+  aesGcmDecrypt(
+    _key: CryptoKey,
+    _encryptedData: EncryptedData
+  ): Promise<Uint8Array>;
   generateUMK(): Promise<CryptoKey>;
-  generateSalt(length?: number): Promise<Uint8Array>;
+  generateSalt(_length?: number): Promise<Uint8Array>;
 }
 
 /**
@@ -43,30 +53,40 @@ export class MainThreadCryptoWorker implements CryptoWorker {
 
   async unwrapUMK(wrappedKey: WrappedKey, kek: CryptoKey): Promise<CryptoKey> {
     // @ts-ignore - Uint8Array is compatible with BufferSource at runtime
-    const umk = await crypto.subtle.unwrapKey(
+    const umkRaw = await crypto.subtle.unwrapKey(
       'raw',
       wrappedKey.wrappedKey,
       kek,
       'AES-KW',
-      'HKDF',
-      false,
-      ['deriveKey']
+      { name: 'HMAC', hash: 'SHA-256' },
+      true, // extractable
+      ['sign']
     );
 
-    return umk;
+    return umkRaw;
   }
 
-  async hkdf(key: CryptoKey, info: string, length?: number): Promise<CryptoKey> {
+  async hkdf(
+    key: CryptoKey,
+    info: string,
+    length?: number
+  ): Promise<CryptoKey> {
     const { hkdf } = await import('./hkdf');
     return hkdf(key, info, length);
   }
 
-  async aesGcmEncrypt(key: CryptoKey, plaintext: Uint8Array): Promise<EncryptedData> {
+  async aesGcmEncrypt(
+    key: CryptoKey,
+    plaintext: Uint8Array
+  ): Promise<EncryptedData> {
     const { aesGcmEncrypt } = await import('./aes');
     return aesGcmEncrypt(key, plaintext);
   }
 
-  async aesGcmDecrypt(key: CryptoKey, encryptedData: EncryptedData): Promise<Uint8Array> {
+  async aesGcmDecrypt(
+    key: CryptoKey,
+    encryptedData: EncryptedData
+  ): Promise<Uint8Array> {
     const { aesGcmDecrypt } = await import('./aes');
     return aesGcmDecrypt(key, encryptedData);
   }
