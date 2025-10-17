@@ -6,11 +6,15 @@ export const CreateNoteRequestSchema = z.object({
   bodyCt: z.instanceof(Uint8Array),
   ivBody: z.instanceof(Uint8Array),
   termHashes: z.array(z.instanceof(Uint8Array)),
-  tags: z.array(z.object({
-    tagCt: z.instanceof(Uint8Array),
-    ivTag: z.instanceof(Uint8Array),
-    tagTermHashes: z.array(z.instanceof(Uint8Array)),
-  })).optional(),
+  tags: z
+    .array(
+      z.object({
+        tagCt: z.instanceof(Uint8Array),
+        ivTag: z.instanceof(Uint8Array),
+        tagTermHashes: z.array(z.instanceof(Uint8Array)),
+      })
+    )
+    .optional(),
 });
 
 export const UpdateNoteRequestSchema = z.object({
@@ -38,11 +42,13 @@ export const NoteResponseSchema = z.object({
 export const BatchNotesResponseSchema = z.array(NoteResponseSchema);
 
 export const NotesListResponseSchema = z.object({
-  notes: z.array(z.object({
-    id: z.string().uuid(),
-    created_at: z.date(),
-    updated_at: z.date(),
-  })),
+  notes: z.array(
+    z.object({
+      id: z.string().uuid(),
+      created_at: z.date(),
+      updated_at: z.date(),
+    })
+  ),
   nextCursor: z.string().optional(),
 });
 

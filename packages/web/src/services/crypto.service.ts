@@ -39,7 +39,9 @@ export class CryptoService {
    * Derives user keys from password and salt
    */
   async deriveUserKeys(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _password: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _salt: Uint8Array
   ): Promise<UserKeys> {
     try {

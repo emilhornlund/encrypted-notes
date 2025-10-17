@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { User } from './user.entity';
 import { NoteTag } from './note-tag.entity';
 import { TagTerm } from './tag-term.entity';
@@ -21,10 +30,10 @@ export class Tag {
   @Column({ type: 'bytea' })
   ivTag: Buffer;
 
-  @OneToMany(() => NoteTag, noteTag => noteTag.tag, { cascade: true })
+  @OneToMany(() => NoteTag, (noteTag) => noteTag.tag, { cascade: true })
   noteTags: NoteTag[];
 
-  @OneToMany(() => TagTerm, term => term.tag, { cascade: true })
+  @OneToMany(() => TagTerm, (term) => term.tag, { cascade: true })
   terms: TagTerm[];
 
   @CreateDateColumn({ type: 'timestamptz' })

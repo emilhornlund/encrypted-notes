@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Box } from '@mui/material'
-import { AuthProvider } from './hooks/useAuth'
-import { LoginPage } from './components/auth/LoginForm'
-import { RegisterPage } from './components/auth/RegisterForm'
-import { MainLayout } from './components/layout/AppShell'
-import { PrivateRoute } from './components/auth/PrivateRoute'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { AuthProvider } from './hooks/useAuth';
+import { LoginPage } from './components/auth/LoginForm';
+import { RegisterPage } from './components/auth/RegisterForm';
+import { MainLayout } from './components/layout/AppShell';
+import { PrivateRoute } from './components/auth/PrivateRoute';
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         </Box>
       </Router>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

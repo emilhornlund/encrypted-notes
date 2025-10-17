@@ -10,11 +10,13 @@ export const SearchRequestSchema = z.object({
 });
 
 export const SearchResponseSchema = z.object({
-  notes: z.array(z.object({
-    id: z.string().uuid(),
-    created_at: z.date(),
-    updated_at: z.date(),
-  })),
+  notes: z.array(
+    z.object({
+      id: z.string().uuid(),
+      created_at: z.date(),
+      updated_at: z.date(),
+    })
+  ),
   nextCursor: z.string().optional(),
 });
 

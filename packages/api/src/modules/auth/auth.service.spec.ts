@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { User } from '../../entities/user.entity';
 import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcryptjs';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -135,6 +136,7 @@ describe('AuthService', () => {
       mockJwtService.sign.mockReturnValue('jwt-token');
 
       // Mock bcrypt.compare to return true
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       jest.spyOn(require('bcryptjs'), 'compare').mockResolvedValue(true);
 
       const result = await service.login(loginData);
@@ -170,6 +172,7 @@ describe('AuthService', () => {
       mockUserRepository.findOne.mockResolvedValue(mockUser);
 
       // Mock bcrypt.compare to return false
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       jest.spyOn(require('bcryptjs'), 'compare').mockResolvedValue(false);
 
       await expect(service.login(loginData)).rejects.toThrow(

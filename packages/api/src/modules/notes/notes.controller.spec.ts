@@ -78,7 +78,7 @@ describe('NotesController', () => {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
         ],
-        nextCursor: undefined,
+        nextCursor: undefined as string | undefined,
       };
 
       mockNotesService.findAll.mockResolvedValue(expectedResult);
@@ -99,7 +99,7 @@ describe('NotesController', () => {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
         ],
-        nextCursor: 'cursor-token',
+        nextCursor: undefined as string | undefined,
       };
 
       mockNotesService.findAll.mockResolvedValue(expectedResult);
@@ -223,7 +223,7 @@ describe('NotesController', () => {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
         ],
-        nextCursor: undefined,
+        nextCursor: undefined as string | undefined,
       };
 
       mockNotesService.search.mockResolvedValue(expectedResult);
@@ -245,7 +245,7 @@ describe('NotesController', () => {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
         ],
-        nextCursor: undefined,
+        nextCursor: undefined as string | undefined,
       };
 
       mockNotesService.search.mockResolvedValue(expectedResult);

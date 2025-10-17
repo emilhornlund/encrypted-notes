@@ -3,15 +3,13 @@
 ## Commands
 
 - **Build all**: `yarn build`
-- **Build single package**: `yarn workspace @encrypted-notes/<package> run build`
+- **Build API**: `yarn workspace @encrypted-notes/api run build`
+- **Build web**: `yarn workspace @encrypted-notes/web run build`
 - **Dev all**: `yarn dev` (runs API + web concurrently)
 - **Dev API**: `yarn workspace @encrypted-notes/api run start:dev`
 - **Dev web**: `yarn workspace @encrypted-notes/web run dev`
-- **Lint all**: `yarn lint`
-- **Lint single**: `yarn workspace @encrypted-notes/<package> run lint`
-- **Lint fix**: `yarn lint:fix`
-- **Test all**: `yarn test`
-- **Test single package**: `yarn workspace @encrypted-notes/<package> run test`
+- **Lint**: `yarn lint` or `yarn lint:fix`
+- **Test**: `yarn test` (all), `yarn workspace @encrypted-notes/<package> run test` (single package)
 - **Test single file**: `yarn workspace @encrypted-notes/<package> run test -- <test-file>` (Jest) or `yarn workspace @encrypted-notes/<package> run test <test-file>` (Vitest)
 - **Test with pattern**: `yarn workspace @encrypted-notes/api run test -- --testNamePattern="<pattern>"` (Jest) or `yarn workspace @encrypted-notes/<package> run test --run --reporter=verbose <pattern>` (Vitest)
 - **Test coverage**: `yarn workspace @encrypted-notes/<package> run test:ci`
@@ -22,16 +20,16 @@
 
 ## Code Style
 
-- **Language**: TypeScript (strict mode: noImplicitAny, strictNullChecks, strictBindCallApply)
-- **Imports**: ES6 imports, group external libraries first, then internal modules (absolute paths preferred)
+- **Language**: TypeScript (strict: noImplicitAny, strictNullChecks, strictBindCallApply)
+- **Imports**: ES6, external libs first, then internal (absolute paths preferred)
 - **Formatting**: Prettier (semi: true, singleQuote: true, tabWidth: 2, printWidth: 80, trailingComma: es5)
-- **Editor**: 2-space indentation, UTF-8, LF line endings, final newlines, trim trailing whitespace
-- **Types**: Strict TypeScript, no `any` types except for external APIs, explicit return types
-- **Naming**: camelCase for variables/functions/methods, PascalCase for classes/components/interfaces, UPPER_SNAKE_CASE for constants
-- **Error handling**: try/catch for async operations, throw descriptive Error objects, validate inputs with Zod schemas
-- **Security**: Never log passwords/keys/plaintext, use Web Crypto API or Node.js crypto, zeroize sensitive data, validate all inputs
-- **Comments**: JSDoc for public APIs only, avoid inline comments for obvious code, document complex crypto operations
-- **Linting**: ESLint with TypeScript rules, no unused vars (except prefixed with \_), warn on console.log (up to 20 warnings allowed). CI enforces linting on all PRs and pushes.
+- **Editor**: 2-space indent, UTF-8, LF endings, final newlines, trim whitespace
+- **Types**: Strict TS, no `any` except external APIs, explicit return types
+- **Naming**: camelCase vars/functions, PascalCase classes/components, UPPER_SNAKE_CASE constants
+- **Error handling**: try/catch async ops, descriptive Error objects, Zod validation
+- **Security**: Never log secrets/plaintext, use Web Crypto API/Node crypto, zeroize sensitive data
+- **Comments**: JSDoc public APIs only, document complex crypto ops
+- **Linting**: ESLint + TS rules, no unused vars (\_ prefix ok), console.log warnings (20 max)
 
 ## Architecture
 
@@ -43,21 +41,6 @@
 - **Testing**: Vitest (common/web), Jest (api), Playwright (e2e), coverage reporting
 - **Validation**: Zod schemas for runtime validation, class-validator for API DTOs
 
-## Quality Gate (Definition of Done)
+## Quality Gate
 
-Before completing any task, ALWAYS ensure the project passes:
-
-1) yarn lint
-2) yarn build
-3yarn test
-
-### Agent workflow
-
-- After making changes, run: yarn verify
-- If any step fails, FIX THE CODE and rerun yarn verify until all pass.
-- Only then present the final result.
-
-### Scope
-
-- Apply to the entire repo (all workspaces).
-- Never skip tests, lint, or type checks. Do not disable rules to “make it pass.”
+Before completing tasks, ensure: `yarn lint && yarn build && yarn test`

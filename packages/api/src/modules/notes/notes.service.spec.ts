@@ -14,6 +14,7 @@ describe('NotesService', () => {
   let service: NotesService;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let _noteRepository: Repository<Note>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let _noteTermRepository: Repository<NoteTerm>;

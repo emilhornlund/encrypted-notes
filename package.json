@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspace @encrypted-notes/api run build && yarn workspace @encrypted-notes/web run build",
+    "build": "yarn workspace @encrypted-notes/common run build && yarn workspace @encrypted-notes/api run build && yarn workspace @encrypted-notes/web run build",
     "build:api": "yarn workspace @encrypted-notes/api run build",
     "build:web": "yarn workspace @encrypted-notes/web run build",
     "dev": "concurrently \"yarn workspace @encrypted-notes/api run start:dev\" \"yarn workspace @encrypted-notes/web run dev\"",

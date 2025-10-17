@@ -33,7 +33,12 @@ describe('JwtStrategy', () => {
 
   describe('validate', () => {
     it('should return user data if user is valid', async () => {
-      const payload = { sub: 'user-id', email: 'test@example.com' };
+      const payload = {
+        sub: 'user-id',
+        email: 'test@example.com',
+        iat: 1234567890,
+        exp: 1234567890 + 3600,
+      };
       const mockUser = { id: 'user-id', email: 'test@example.com' };
 
       mockAuthService.validateUser.mockResolvedValue(mockUser);
@@ -45,7 +50,12 @@ describe('JwtStrategy', () => {
     });
 
     it('should throw UnauthorizedException if user is not found', async () => {
-      const payload = { sub: 'user-id', email: 'test@example.com' };
+      const payload = {
+        sub: 'user-id',
+        email: 'test@example.com',
+        iat: 1234567890,
+        exp: 1234567890 + 3600,
+      };
 
       mockAuthService.validateUser.mockResolvedValue(null);
 

@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Drawer,
   List,
@@ -9,25 +9,25 @@ import {
   ListItemText,
   Divider,
   Box,
-} from '@mui/material'
+} from '@mui/material';
 import {
   Notes as NotesIcon,
   Search as SearchIcon,
   Label as LabelIcon,
   Add as AddIcon,
-} from '@mui/icons-material'
+} from '@mui/icons-material';
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 export const Sidebar: React.FC = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
     { text: 'All Notes', path: '/', icon: <NotesIcon /> },
     { text: 'Search', path: '/search', icon: <SearchIcon /> },
     { text: 'Tags', path: '/tags', icon: <LabelIcon /> },
-  ]
+  ];
 
   return (
     <Drawer
@@ -76,5 +76,5 @@ export const Sidebar: React.FC = () => {
         ))}
       </List>
     </Drawer>
-  )
-}
+  );
+};

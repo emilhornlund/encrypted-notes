@@ -12,6 +12,14 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
+import { Request as ExpressRequest } from 'express';
+
+interface AuthenticatedRequest extends ExpressRequest {
+  user: {
+    userId: string;
+  };
+}
+
 import {
   ApiTags,
   ApiOperation,

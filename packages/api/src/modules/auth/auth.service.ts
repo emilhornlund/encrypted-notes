@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../../entities/user.entity';
 import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
+import { Argon2Params } from '@encrypted-notes/common/src/crypto/types';
 
 @Injectable()
 export class AuthService {
@@ -89,7 +90,7 @@ export class AuthService {
     userId: string,
     wrappedUMK: Buffer,
     salt: Buffer,
-    argon2Params: any
+    argon2Params: Argon2Params
   ): Promise<void> {
     await this._userRepository.update(userId, {
       wrappedUMK,

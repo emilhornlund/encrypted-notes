@@ -1,6 +1,4 @@
-// @ts-nocheck
 import { EncryptedData } from './types';
-
 /**
  * Encrypts data using AES-GCM with a random IV
  */
@@ -10,7 +8,6 @@ export async function aesGcmEncrypt(
 ): Promise<EncryptedData> {
   const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV
 
-  // @ts-ignore - Uint8Array is compatible with BufferSource at runtime
   const ciphertext = await crypto.subtle.encrypt(
     {
       name: 'AES-GCM',

@@ -19,7 +19,7 @@ export function decodeJWT(token: string): JWTPayload | null {
 
     const payload = parts[1];
     const decodedPayload = atob(payload!.replace(/-/g, '+').replace(/_/g, '/'));
-    const parsed = JSON.parse(decodedPayload) as any;
+    const parsed = JSON.parse(decodedPayload) as JWTPayload;
 
     // Validate the payload has required fields
     if (!parsed.sub || !parsed.email || !parsed.iat || !parsed.exp) {

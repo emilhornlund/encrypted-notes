@@ -28,11 +28,15 @@ const TestComponent = () => {
       <div data-testid="token">{token || 'null'}</div>
       <div data-testid="loading">{isLoading ? 'true' : 'false'}</div>
 
-      <button onClick={() => login('test@example.com', 'password').catch(() => {})}>
+      <button
+        onClick={() => login('test@example.com', 'password').catch(() => {})}
+      >
         Login
       </button>
 
-      <button onClick={() => register('test@example.com', 'password').catch(() => {})}>
+      <button
+        onClick={() => register('test@example.com', 'password').catch(() => {})}
+      >
         Register
       </button>
 

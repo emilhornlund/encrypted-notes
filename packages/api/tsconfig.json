@@ -10,6 +10,8 @@
     "experimentalDecorators": true,
     "inlineSources": true,
     "strictNullChecks": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "rootDir": "src",
     "outDir": "dist",
     "composite": true,
@@ -17,7 +19,5 @@
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "test"],
-  "references": [
-    { "path": "../common" }
-  ]
+  "references": [{ "path": "../common" }]
 }
