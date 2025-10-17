@@ -2,9 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches:
+      - "main"
+      - "develop"
   pull_request:
-    branches: [ main ]
+    branches:
+      - "**"
 
 jobs:
   test:
@@ -31,7 +34,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
         cache: 'yarn'
 
     - name: Install dependencies
