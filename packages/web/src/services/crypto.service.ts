@@ -1,10 +1,10 @@
-// Import crypto functions directly from common package files
-import { MainThreadCryptoWorker } from '@encrypted-notes/common/src/crypto/worker';
-import { zeroize } from '@encrypted-notes/common/src/crypto/argon2';
-import type {
-  WrappedKey,
-  EncryptedData,
-} from '@encrypted-notes/common/src/crypto/types';
+// Import crypto functions from common package
+import {
+  MainThreadCryptoWorker,
+  zeroize,
+  type WrappedKey,
+  type EncryptedData,
+} from '@encrypted-notes/common';
 
 export interface UserKeys {
   umk: CryptoKey;

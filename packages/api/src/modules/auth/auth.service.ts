@@ -8,8 +8,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../../entities/user.entity';
-import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
-import { Argon2Params } from '@encrypted-notes/common/src/crypto/types';
+import {
+  RegisterRequest,
+  LoginRequest,
+  Argon2Params,
+} from '@encrypted-notes/common';
 
 @Injectable()
 export class AuthService {
