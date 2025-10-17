@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import {
+  Alert,
+  Box,
+  Button,
   Container,
   Paper,
   TextField,
-  Button,
   Typography,
-  Box,
-  Alert,
 } from '@mui/material';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/useAuth';
 
 export const RegisterPage: React.FC = () => {

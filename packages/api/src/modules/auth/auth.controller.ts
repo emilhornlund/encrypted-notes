@@ -1,7 +1,8 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { LoginRequest, RegisterRequest } from '@encrypted-notes/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
 import { AuthService } from './auth.service';
-import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 
 @ApiTags('auth')
 @Controller('auth')

@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from 'react';
 import {
   getUserFromToken,
   isTokenExpired,
   WrappedKey,
 } from '@encrypted-notes/common';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
 import { cryptoService, UserKeys } from '../services/crypto.service';
 
 interface User {

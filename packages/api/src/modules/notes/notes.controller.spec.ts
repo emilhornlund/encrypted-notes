@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Test, TestingModule } from '@nestjs/testing';
-import { NotesController } from './notes.controller';
-import { NotesService } from './notes.service';
 import {
+  BatchNotesRequest,
   CreateNoteRequest,
   UpdateNoteRequest,
-  BatchNotesRequest,
 } from '@encrypted-notes/common';
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { NotesController } from './notes.controller';
+import { NotesService } from './notes.service';
 
 describe('NotesController', () => {
   let controller: NotesController;

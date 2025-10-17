@@ -1,28 +1,29 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  CircularProgress,
-  Alert,
-  AppBar,
-  Toolbar,
-  IconButton,
-} from '@mui/material';
+  CreateNoteRequest,
+  NoteResponse,
+  UpdateNoteRequest,
+} from '@encrypted-notes/common';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
 } from '@mui/icons-material';
+import {
+  Alert,
+  AppBar,
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  Paper,
+  TextField,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/useAuth';
 import { cryptoService } from '../../services/crypto.service';
-import {
-  CreateNoteRequest,
-  UpdateNoteRequest,
-  NoteResponse,
-} from '@encrypted-notes/common';
 
 export const NoteEditor: React.FC = () => {
   const { id: noteId } = useParams<{ id: string }>();

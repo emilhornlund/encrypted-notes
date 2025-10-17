@@ -6,9 +6,11 @@ export async function aesGcmEncrypt(
   key: CryptoKey,
   plaintext: Uint8Array
 ): Promise<EncryptedData> {
-  const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV
+  const iv = new Uint8Array(12);
+  crypto.getRandomValues(iv); // 96-bit IV
 
-  const ciphertext = await crypto.subtle.encrypt(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ciphertext = await (crypto.subtle.encrypt as any)(
     {
       name: 'AES-GCM',
       iv,
@@ -30,7 +32,8 @@ export async function aesGcmDecrypt(
   key: CryptoKey,
   encryptedData: EncryptedData
 ): Promise<Uint8Array> {
-  const plaintext = await crypto.subtle.decrypt(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const plaintext = await (crypto.subtle.decrypt as any)(
     {
       name: 'AES-GCM',
       iv: encryptedData.iv,

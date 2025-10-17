@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 // Import crypto functions from common package
 import {
-  MainThreadCryptoWorker,
-  zeroize,
-  type WrappedKey,
   type EncryptedData,
+  MainThreadCryptoWorker,
+  type WrappedKey,
+  zeroize,
 } from '@encrypted-notes/common';
 
 export interface UserKeys {

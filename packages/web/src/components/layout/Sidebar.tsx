@@ -1,21 +1,21 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import {
+  Add as AddIcon,
+  Label as LabelIcon,
+  Notes as NotesIcon,
+  Search as SearchIcon,
+} from '@mui/icons-material';
+import {
+  Box,
+  Divider,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
-  Box,
 } from '@mui/material';
-import {
-  Notes as NotesIcon,
-  Search as SearchIcon,
-  Label as LabelIcon,
-  Add as AddIcon,
-} from '@mui/icons-material';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 

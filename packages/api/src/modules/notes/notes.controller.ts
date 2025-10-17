@@ -1,16 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
   Body,
-  Param,
-  Query,
-  UseGuards,
-  Request,
+  Controller,
+  Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { Request as ExpressRequest } from 'express';
 
@@ -21,22 +21,23 @@ interface AuthenticatedRequest extends ExpressRequest {
 }
 
 import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-  ApiBearerAuth,
-  ApiQuery,
-} from '@nestjs/swagger';
-import { NotesService } from './notes.service';
-import { JwtAuthGuard } from '../auth/jwt.guard';
-import {
-  CreateNoteRequest,
-  UpdateNoteRequest,
   BatchNotesRequest,
-  NotesListResponse,
-  NoteResponse,
   BatchNotesResponse,
+  CreateNoteRequest,
+  NoteResponse,
+  NotesListResponse,
+  UpdateNoteRequest,
 } from '@encrypted-notes/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import { NotesService } from './notes.service';
 
 @ApiTags('notes')
 @ApiBearerAuth()

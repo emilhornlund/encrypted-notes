@@ -1,10 +1,11 @@
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/useAuth';
-import { Sidebar } from './Sidebar';
-import { NotesList } from '../notes/NotesList';
 import { NoteEditor } from '../notes/NoteEditor';
+import { NotesList } from '../notes/NotesList';
+import { Sidebar } from './Sidebar';
 
 const TagsPage = () => <div>Tags Page - Coming Soon</div>;
 const SearchPage = () => <div>Search Page - Coming Soon</div>;

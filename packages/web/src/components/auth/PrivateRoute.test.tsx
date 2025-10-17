@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
+
 import { PrivateRoute } from './PrivateRoute';
 
 // Mock the useAuth hook

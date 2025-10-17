@@ -1,6 +1,7 @@
+import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
+
 import { useAuth } from '../../hooks/useAuth';
 
 interface PrivateRouteProps {

@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { AuthProvider } from './hooks/useAuth';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { LoginPage } from './components/auth/LoginForm';
+import { PrivateRoute } from './components/auth/PrivateRoute';
 import { RegisterPage } from './components/auth/RegisterForm';
 import { MainLayout } from './components/layout/AppShell';
-import { PrivateRoute } from './components/auth/PrivateRoute';
+import { AuthProvider } from './hooks/useAuth';
 
 function App() {
   return (

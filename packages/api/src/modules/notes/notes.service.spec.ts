@@ -1,14 +1,15 @@
+import { CreateNoteRequest, UpdateNoteRequest } from '@encrypted-notes/common';
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { NotesService } from './notes.service';
+
 import { Note } from '../../entities/note.entity';
-import { NoteTerm } from '../../entities/note-term.entity';
 import { NoteTag } from '../../entities/note-tag.entity';
+import { NoteTerm } from '../../entities/note-term.entity';
 import { Tag } from '../../entities/tag.entity';
 import { TagTerm } from '../../entities/tag-term.entity';
-import { CreateNoteRequest, UpdateNoteRequest } from '@encrypted-notes/common';
-import { NotFoundException } from '@nestjs/common';
+import { NotesService } from './notes.service';
 
 describe('NotesService', () => {
   let service: NotesService;

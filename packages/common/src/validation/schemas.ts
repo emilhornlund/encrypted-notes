@@ -2,12 +2,12 @@ import { z } from 'zod';
 
 // Re-export DTO schemas for validation
 export {
+  AddTagRequestSchema,
+  CreateNoteRequestSchema,
   LoginRequestSchema,
   RegisterRequestSchema,
-  CreateNoteRequestSchema,
-  UpdateNoteRequestSchema,
   SearchRequestSchema,
-  AddTagRequestSchema,
+  UpdateNoteRequestSchema,
 } from '../dtos';
 
 // Additional validation schemas for internal use

@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NotesListResponse } from '@encrypted-notes/common';
+import { Add as AddIcon } from '@mui/icons-material';
 import {
+  Alert,
   Box,
+  Button,
   Card,
   CardContent,
-  Typography,
-  Button,
   CircularProgress,
-  Alert,
   Fab,
   Pagination,
   Stack,
+  Typography,
 } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../../hooks/useAuth';
-import { NotesListResponse } from '@encrypted-notes/common';
 
 const NOTES_PER_PAGE = 20;
 

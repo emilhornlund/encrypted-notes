@@ -1,18 +1,19 @@
+import {
+  BatchNotesResponse,
+  CreateNoteRequest,
+  NoteResponse,
+  NotesListResponse,
+  UpdateNoteRequest,
+} from '@encrypted-notes/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { Note } from '../../entities/note.entity';
-import { NoteTerm } from '../../entities/note-term.entity';
 import { NoteTag } from '../../entities/note-tag.entity';
+import { NoteTerm } from '../../entities/note-term.entity';
 import { Tag } from '../../entities/tag.entity';
 import { TagTerm } from '../../entities/tag-term.entity';
-import {
-  CreateNoteRequest,
-  UpdateNoteRequest,
-  NotesListResponse,
-  NoteResponse,
-  BatchNotesResponse,
-} from '@encrypted-notes/common';
 
 @Injectable()
 export class NotesService {

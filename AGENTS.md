@@ -21,7 +21,7 @@
 ## Code Style
 
 - **Language**: TypeScript (strict: noImplicitAny, strictNullChecks, strictBindCallApply)
-- **Imports**: ES6, external libs first, then internal (absolute paths preferred)
+- **Imports**: ES6, external libs first, then internal (absolute paths preferred), sorted with eslint-plugin-simple-import-sort
 - **Formatting**: Prettier (semi: true, singleQuote: true, tabWidth: 2, printWidth: 80, trailingComma: es5)
 - **Editor**: 2-space indent, UTF-8, LF endings, final newlines, trim whitespace
 - **Types**: Strict TS, no `any` except external APIs, explicit return types
@@ -29,7 +29,7 @@
 - **Error handling**: try/catch async ops, descriptive Error objects, Zod validation
 - **Security**: Never log secrets/plaintext, use Web Crypto API/Node crypto, zeroize sensitive data
 - **Comments**: JSDoc public APIs only, document complex crypto ops
-- **Linting**: ESLint + TS rules, no unused vars (\_ prefix ok), console.log warnings (20 max)
+- **Linting**: ESLint + TS rules, import/export sorting, no unused vars (\_ prefix ok), console.log warnings (20 max)
 
 ## Architecture
 

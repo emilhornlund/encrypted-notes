@@ -1,4 +1,4 @@
-import { WrappedKey, Argon2Params, EncryptedData } from './types';
+import { Argon2Params, EncryptedData, WrappedKey } from './types';
 
 /**
  * Interface for crypto operations that can be run in a Web Worker
@@ -51,7 +51,8 @@ export class MainThreadCryptoWorker implements CryptoWorker {
   }
 
   async unwrapUMK(wrappedKey: WrappedKey, kek: CryptoKey): Promise<CryptoKey> {
-    const umkRaw = await crypto.subtle.unwrapKey(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const umkRaw = await (crypto.subtle.unwrapKey as any)(
       'raw',
       wrappedKey.wrappedKey,
       kek,

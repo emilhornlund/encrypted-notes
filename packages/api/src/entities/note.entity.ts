@@ -1,16 +1,17 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
-import { NoteTerm } from './note-term.entity';
+
 import { NoteTag } from './note-tag.entity';
+import { NoteTerm } from './note-term.entity';
+import { User } from './user.entity';
 
 @Entity('notes')
 export class Note {

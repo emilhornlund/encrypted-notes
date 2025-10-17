@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+
 import { Note } from './note.entity';
 
 @Entity('note_terms')

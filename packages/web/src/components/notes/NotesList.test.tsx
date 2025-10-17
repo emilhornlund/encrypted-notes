@@ -1,10 +1,11 @@
+import { NotesListResponse } from '@encrypted-notes/common';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import { NotesList } from './NotesList';
+import { vi } from 'vitest';
+
 import { useAuth } from '../../hooks/useAuth';
-import { NotesListResponse } from '@encrypted-notes/common';
+import { NotesList } from './NotesList';
 
 // Mock the useAuth hook
 vi.mock('../../hooks/useAuth', () => ({

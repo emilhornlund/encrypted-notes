@@ -1,11 +1,11 @@
-export * from './types';
+export * from './aes';
 export {
+  type Argon2Params,
+  DEFAULT_ARGON2_PARAMS,
   deriveKEK,
   generateSalt,
   zeroize,
-  DEFAULT_ARGON2_PARAMS,
-  type Argon2Params,
 } from './argon2';
-export * from './aes';
 export * from './hkdf';
+export * from './types';
 export * from './worker';

@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
+import { Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+
 import { Tag } from './tag.entity';
 
 @Entity('tag_terms')

@@ -37,7 +37,8 @@ export async function deriveKEK(
     params.t * 1000 + Math.floor(params.m / 100)
   );
 
-  return crypto.subtle.deriveKey(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (crypto.subtle.deriveKey as any)(
     {
       name: 'PBKDF2',
       salt: salt,

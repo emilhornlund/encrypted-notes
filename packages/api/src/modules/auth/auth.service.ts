@@ -1,18 +1,19 @@
 import {
+  Argon2Params,
+  LoginRequest,
+  RegisterRequest,
+} from '@encrypted-notes/common';
+import {
+  ConflictException,
   Injectable,
   UnauthorizedException,
-  ConflictException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Repository } from 'typeorm';
+
 import { User } from '../../entities/user.entity';
-import {
-  RegisterRequest,
-  LoginRequest,
-  Argon2Params,
-} from '@encrypted-notes/common';
 
 @Injectable()
 export class AuthService {

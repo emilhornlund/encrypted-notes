@@ -3,6 +3,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import prettier from 'eslint-plugin-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
@@ -24,10 +25,11 @@ export default defineConfig([
         tsconfigRootDir: new URL('.', import.meta.url).pathname,
       },
     },
-    plugins: { prettier },
+    plugins: { prettier, 'simple-import-sort': simpleImportSort },
     rules: {
       ...prettier.configs.recommended.rules,
       'no-console': 'warn',
+      'simple-import-sort/imports': 'error',
     },
   },
   {
@@ -51,6 +53,12 @@ export default defineConfig([
     files: ['src/utils/crypto.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
+    files: ['**/index.ts'],
+    rules: {
+      'simple-import-sort/exports': 'error',
     },
   },
   eslintConfigPrettier,
