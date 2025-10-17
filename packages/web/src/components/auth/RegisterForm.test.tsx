@@ -10,6 +10,14 @@ vi.mock('../../hooks/useAuth', () => ({
   useAuth: vi.fn(),
 }));
 
+// Mock fetch for faster tests
+global.fetch = vi.fn().mockImplementation(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({ accessToken: 'mock-token' }),
+  })
+);
+
 // Mock react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as any;
@@ -26,7 +34,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('RegisterPage', () => {
-  const mockRegister = vi.fn();
+  const mockRegister = vi.fn().mockResolvedValue(undefined);
   const mockNavigate = vi.fn();
 
   beforeEach(async () => {
