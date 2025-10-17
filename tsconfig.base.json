@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@encrypted-notes/common": ["packages/common/src/index.ts"],
+      "@encrypted-notes/common/*": ["packages/common/src/*"],
+      "@encrypted-notes/api/*": ["packages/api/src/*"],
+      "@encrypted-notes/web/*": ["packages/web/src/*"]
+    }
+  }
+}

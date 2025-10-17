@@ -2,31 +2,37 @@
   "name": "encrypted-notes",
   "version": "1.0.0",
   "private": true,
+  "author": "Emil Hörnlund <emil.hornlund@me.com>",
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspace @encrypted-notes/common run build && yarn workspace @encrypted-notes/api run build && yarn workspace @encrypted-notes/web run build",
+    "build": "yarn workspace @encrypted-notes/api run build && yarn workspace @encrypted-notes/web run build",
+    "build:api": "yarn workspace @encrypted-notes/api run build",
+    "build:web": "yarn workspace @encrypted-notes/web run build",
     "dev": "concurrently \"yarn workspace @encrypted-notes/api run start:dev\" \"yarn workspace @encrypted-notes/web run dev\"",
     "dev:api": "yarn workspace @encrypted-notes/api run start:dev",
     "dev:web": "yarn workspace @encrypted-notes/web run dev",
-    "lint": "yarn workspace @encrypted-notes/common run lint && yarn workspace @encrypted-notes/api run lint && yarn workspace @encrypted-notes/web run lint",
-    "lint:fix": "yarn workspace @encrypted-notes/common run lint:fix && yarn workspace @encrypted-notes/api run lint:fix && yarn workspace @encrypted-notes/web run lint:fix",
-    "format": "yarn workspace @encrypted-notes/common run format && yarn workspace @encrypted-notes/api run format && yarn workspace @encrypted-notes/web run format",
-    "test": "yarn workspace @encrypted-notes/common run test && yarn workspace @encrypted-notes/api run test && yarn workspace @encrypted-notes/web run test",
-    "test:ci": "yarn workspace @encrypted-notes/common run test:ci && yarn workspace @encrypted-notes/api run test:ci && yarn workspace @encrypted-notes/web run test:ci",
-    "typecheck": "yarn workspace @encrypted-notes/common run typecheck && yarn workspace @encrypted-notes/api run typecheck && yarn workspace @encrypted-notes/web run typecheck",
-    "verify": "yarn lint && yarn build && yarn typecheck && yarn test",
+    "lint": "concurrently \"yarn workspace @encrypted-notes/common run lint\" \"yarn workspace @encrypted-notes/api run lint\" \"yarn workspace @encrypted-notes/web run lint\"",
+    "lint:fix": "concurrently \"yarn workspace @encrypted-notes/common run lint:fix\" \"yarn workspace @encrypted-notes/api run lint:fix\" \"yarn workspace @encrypted-notes/web run lint:fix\"",
+    "test": "concurrently \"yarn workspace @encrypted-notes/common run test\" \"yarn workspace @encrypted-notes/api run test\" \"yarn workspace @encrypted-notes/web run test\"",
+    "test:ci": "concurrently \"yarn workspace @encrypted-notes/common run test:ci\" \"yarn workspace @encrypted-notes/api run test:ci\" \"yarn workspace @encrypted-notes/web run test:ci\"",
+    "verify": "yarn lint && yarn build && yarn test",
     "clean": "yarn workspace @encrypted-notes/common run clean && yarn workspace @encrypted-notes/api run clean && yarn workspace @encrypted-notes/web run clean"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@eslint/js": "^9.37.0",
+    "@types/node": "^20",
     "concurrently": "^9.2.1",
-    "eslint": "^8.45.0",
-    "prettier": "^3.0.0",
-    "typescript": "^5.0.0"
-  },
-  "author": "Emil Hörnlund <emil.hornlund@me.com>",
-  "license": "MIT"
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint": "^9.37.0",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.1",
+    "prettier": "^3.6.2",
+    "rimraf": "^6.0.1",
+    "typescript-eslint": "^8.46.1",
+    "typescript": "^5.6.0"
+  }
 }

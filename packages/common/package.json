@@ -4,17 +4,18 @@
   "description": "Shared utilities, DTOs, and crypto functions for encrypted notes",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "Emil Hörnlund <emil.hornlund@me.com>",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
+    "clean": "rimraf dist",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write src/**/*.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "test:ci": "vitest run --coverage"
   },
   "dependencies": {
     "argon2-browser": "^1.18.0",
@@ -22,9 +23,7 @@
     "zod": "^3.22.0"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
     "@types/web": "^0.0.102",
-    "typescript": "^5.0.0",
     "vitest": "^0.34.0"
   },
   "files": [

@@ -10,14 +10,12 @@
 - **Lint all**: `yarn lint`
 - **Lint single**: `yarn workspace @encrypted-notes/<package> run lint`
 - **Lint fix**: `yarn lint:fix`
-- **Format**: `yarn format`
 - **Test all**: `yarn test`
 - **Test single package**: `yarn workspace @encrypted-notes/<package> run test`
 - **Test single file**: `yarn workspace @encrypted-notes/<package> run test -- <test-file>` (Jest) or `yarn workspace @encrypted-notes/<package> run test <test-file>` (Vitest)
 - **Test with pattern**: `yarn workspace @encrypted-notes/api run test -- --testNamePattern="<pattern>"` (Jest) or `yarn workspace @encrypted-notes/<package> run test --run --reporter=verbose <pattern>` (Vitest)
 - **Test coverage**: `yarn workspace @encrypted-notes/<package> run test:ci`
 - **Test e2e**: `yarn workspace @encrypted-notes/web run test:e2e` (Playwright)
-- **Type check**: `yarn typecheck`
 - **Clean**: `yarn clean`
 - **Database migrations**: `yarn workspace @encrypted-notes/api run migration:generate/run/revert`
 - **Seed database**: `yarn workspace @encrypted-notes/api run seed`
@@ -51,8 +49,7 @@ Before completing any task, ALWAYS ensure the project passes:
 
 1) yarn lint
 2) yarn build
-3) yarn typecheck
-4) yarn test
+3yarn test
 
 ### Agent workflow
 

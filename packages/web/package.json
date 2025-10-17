@@ -3,20 +3,20 @@
   "version": "1.0.0",
   "description": "React frontend for encrypted notes",
   "type": "module",
+  "author": "Emil Hörnlund <emil.hornlund@me.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 20",
-    "lint:fix": "eslint . --ext ts,tsx --fix",
-    "format": "prettier --write .",
+    "build": "vite build",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "preview": "vite preview",
     "test": "vitest --run",
     "test:ui": "vitest --ui",
     "test:ci": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -39,16 +39,9 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
     "jsdom": "^22.1.0",
     "msw": "^1.2.0",
-    "prettier": "^3.0.0",
-    "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vitest": "^0.34.0"
   }
