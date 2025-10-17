@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Import crypto functions from common package
 import {
   MainThreadCryptoWorker,

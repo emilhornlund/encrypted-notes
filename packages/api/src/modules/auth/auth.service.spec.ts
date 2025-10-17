@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 import { User } from '../../entities/user.entity';
 import { RegisterRequest, LoginRequest } from '@encrypted-notes/common';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
 
 describe('AuthService', () => {
   let service: AuthService;

@@ -1,4 +1,3 @@
-// @ts-nocheck
 export interface Argon2Params {
   m: number; // memory cost in KiB (converted to PBKDF2 iterations)
   t: number; // time cost (converted to PBKDF2 iterations)
@@ -38,7 +37,6 @@ export async function deriveKEK(
     params.t * 1000 + Math.floor(params.m / 100)
   );
 
-  // @ts-ignore - Web Crypto API accepts Uint8Array for salt and key type
   return crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',

@@ -99,11 +99,11 @@ export const NoteEditor: React.FC = () => {
       );
 
       const noteData: CreateNoteRequest | UpdateNoteRequest = {
-        titleCt: encryptedData.titleCt as any,
-        ivTitle: encryptedData.ivTitle as any,
-        bodyCt: encryptedData.bodyCt as any,
-        ivBody: encryptedData.ivBody as any,
-        termHashes: encryptedData.termHashes as any,
+        titleCt: encryptedData.titleCt as Uint8Array<ArrayBuffer>,
+        ivTitle: encryptedData.ivTitle as Uint8Array<ArrayBuffer>,
+        bodyCt: encryptedData.bodyCt as Uint8Array<ArrayBuffer>,
+        ivBody: encryptedData.ivBody as Uint8Array<ArrayBuffer>,
+        termHashes: encryptedData.termHashes as Uint8Array<ArrayBuffer>[],
       };
 
       let response: Response;

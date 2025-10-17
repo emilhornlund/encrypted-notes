@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotesController } from './notes.controller';
 import { NotesService } from './notes.service';
@@ -51,7 +52,9 @@ describe('NotesController', () => {
         termHashes: [],
         tags: [],
       };
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const expectedResult = {
         id: 'note-id',
         ...createData,
@@ -73,7 +76,9 @@ describe('NotesController', () => {
 
   describe('findAll', () => {
     it('should return paginated notes', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const expectedResult = {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
@@ -94,7 +99,9 @@ describe('NotesController', () => {
     });
 
     it('should handle limit and cursor query parameters', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const expectedResult = {
         notes: [
           { id: 'note-1', created_at: new Date(), updated_at: new Date() },
@@ -121,7 +128,9 @@ describe('NotesController', () => {
 
   describe('findOne', () => {
     it('should return a specific note', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const noteId = 'note-id';
       const expectedResult = {
         id: noteId,
@@ -144,7 +153,9 @@ describe('NotesController', () => {
 
   describe('findByIds', () => {
     it('should return multiple notes by IDs', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const batchRequest: BatchNotesRequest = { ids: ['note-1', 'note-2'] };
       const expectedResult = [
         {
@@ -172,7 +183,9 @@ describe('NotesController', () => {
 
   describe('update', () => {
     it('should update a note', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const noteId = 'note-id';
       const updateData: UpdateNoteRequest = {
         titleCt: new Uint8Array([1, 2, 3]),
@@ -203,7 +216,9 @@ describe('NotesController', () => {
 
   describe('remove', () => {
     it('should delete a note', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const noteId = 'note-id';
 
       mockNotesService.remove.mockResolvedValue(undefined);
@@ -217,7 +232,9 @@ describe('NotesController', () => {
 
   describe('search', () => {
     it('should search notes by term hashes', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const termHashes = [new Uint8Array([1, 2, 3])];
       const expectedResult = {
         notes: [
@@ -239,7 +256,9 @@ describe('NotesController', () => {
     });
 
     it('should handle limit query parameter', async () => {
-      const mockRequest = { user: { userId: 'user-id' } };
+      const mockRequest = {
+        user: { userId: 'user-id' },
+      } as any;
       const termHashes = [new Uint8Array([1, 2, 3])];
       const expectedResult = {
         notes: [

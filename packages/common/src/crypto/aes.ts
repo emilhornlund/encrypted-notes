@@ -30,7 +30,6 @@ export async function aesGcmDecrypt(
   key: CryptoKey,
   encryptedData: EncryptedData
 ): Promise<Uint8Array> {
-  // @ts-ignore - ArrayBuffer is compatible with BufferSource at runtime
   const plaintext = await crypto.subtle.decrypt(
     {
       name: 'AES-GCM',

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { WrappedKey, Argon2Params, EncryptedData } from './types';
 
 /**
@@ -52,7 +51,6 @@ export class MainThreadCryptoWorker implements CryptoWorker {
   }
 
   async unwrapUMK(wrappedKey: WrappedKey, kek: CryptoKey): Promise<CryptoKey> {
-    // @ts-ignore - Uint8Array is compatible with BufferSource at runtime
     const umkRaw = await crypto.subtle.unwrapKey(
       'raw',
       wrappedKey.wrappedKey,

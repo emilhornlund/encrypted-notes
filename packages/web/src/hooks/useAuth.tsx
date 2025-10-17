@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {
   createContext,
   useContext,
@@ -5,7 +6,11 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { getUserFromToken, isTokenExpired } from '@encrypted-notes/common';
+import {
+  getUserFromToken,
+  isTokenExpired,
+  WrappedKey,
+} from '@encrypted-notes/common';
 import { cryptoService, UserKeys } from '../services/crypto.service';
 
 interface User {
@@ -153,7 +158,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (storedWrappedKey) {
           try {
             const wrappedKeyData = JSON.parse(storedWrappedKey);
-            const wrappedKey: any = {
+            const wrappedKey: WrappedKey = {
               wrappedKey: new Uint8Array(wrappedKeyData.wrappedKey),
               salt: new Uint8Array(wrappedKeyData.salt),
               params: wrappedKeyData.params,

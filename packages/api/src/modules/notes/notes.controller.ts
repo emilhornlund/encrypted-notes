@@ -51,7 +51,7 @@ export class NotesController {
   @ApiResponse({ status: 201, description: 'Note created successfully' })
   @ApiResponse({ status: 400, description: 'Invalid request data' })
   async create(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Body() createNoteData: CreateNoteRequest
   ): Promise<NoteResponse> {
     return this._notesService.create(req.user.userId, createNoteData);
@@ -63,7 +63,7 @@ export class NotesController {
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiQuery({ name: 'cursor', required: false, type: String })
   async findAll(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Query('limit') limit?: string,
     @Query('cursor') cursor?: string
   ): Promise<NotesListResponse> {
@@ -76,7 +76,7 @@ export class NotesController {
   @ApiResponse({ status: 200, description: 'Note retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Note not found' })
   async findOne(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Param('id') noteId: string
   ): Promise<NoteResponse> {
     return this._notesService.findOne(req.user.userId, noteId);
@@ -86,7 +86,7 @@ export class NotesController {
   @ApiOperation({ summary: 'Get multiple notes by IDs' })
   @ApiResponse({ status: 200, description: 'Notes retrieved successfully' })
   async findByIds(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Body() batchRequest: BatchNotesRequest
   ): Promise<BatchNotesResponse> {
     return this._notesService.findByIds(req.user.userId, batchRequest.ids);
@@ -97,7 +97,7 @@ export class NotesController {
   @ApiResponse({ status: 200, description: 'Note updated successfully' })
   @ApiResponse({ status: 404, description: 'Note not found' })
   async update(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Param('id') noteId: string,
     @Body() updateNoteData: UpdateNoteRequest
   ): Promise<NoteResponse> {
@@ -110,7 +110,7 @@ export class NotesController {
   @ApiResponse({ status: 204, description: 'Note deleted successfully' })
   @ApiResponse({ status: 404, description: 'Note not found' })
   async remove(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Param('id') noteId: string
   ): Promise<void> {
     return this._notesService.remove(req.user.userId, noteId);
@@ -124,7 +124,7 @@ export class NotesController {
   })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   async search(
-    @Request() req: any,
+    @Request() req: AuthenticatedRequest,
     @Body() termHashes: Uint8Array[],
     @Query('limit') limit?: string
   ): Promise<NotesListResponse> {
