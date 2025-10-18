@@ -25,10 +25,10 @@ export class Tag {
   @JoinColumn({ name: 'ownerId' })
   owner: User;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   tagCt: Buffer;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   ivTag: Buffer;
 
   @OneToMany(() => NoteTag, (noteTag) => noteTag.tag, { cascade: true })
@@ -37,9 +37,13 @@ export class Tag {
   @OneToMany(() => TagTerm, (term) => term.tag, { cascade: true })
   terms: TagTerm[];
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   updatedAt: Date;
 }

@@ -40,6 +40,9 @@ jobs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
 
+    - name: Install Playwright browsers
+      run: yarn workspace @encrypted-notes/web playwright install --with-deps
+
     - name: Lint
       run: yarn lint
 
@@ -50,6 +53,20 @@ jobs:
       run: yarn test:ci
       env:
         DATABASE_URL: postgresql://postgres:password@localhost:5432/encrypted_notes_test
+
+    - name: Run e2e tests
+      run: yarn e2e
+      env:
+        DATABASE_HOST: localhost
+        DATABASE_PORT: 5432
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: password
+        DATABASE_NAME: encrypted_notes_test
+        JWT_SECRET: test-jwt-secret-for-ci-only-not-secure
+        JWT_REFRESH_SECRET: test-jwt-refresh-secret-for-ci-only-not-secure
+        PORT: 3001
+        NODE_ENV: test
+        CORS_ORIGIN: http://localhost:3000
 
     - name: Upload coverage
       uses: codecov/codecov-action@v3

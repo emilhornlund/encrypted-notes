@@ -25,16 +25,16 @@ export class Note {
   @JoinColumn({ name: 'ownerId' })
   owner: User;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   titleCt: Buffer;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   bodyCt: Buffer;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   ivTitle: Buffer;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   ivBody: Buffer;
 
   @OneToMany(() => NoteTerm, (term) => term.note, { cascade: true })
@@ -43,9 +43,13 @@ export class Note {
   @OneToMany(() => NoteTag, (noteTag) => noteTag.note, { cascade: true })
   noteTags: NoteTag[];
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   updatedAt: Date;
 }

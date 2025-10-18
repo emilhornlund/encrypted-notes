@@ -17,22 +17,26 @@ export class User {
   @Column()
   passwordHash: string;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   wrappedUMK: Buffer;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   salt: Buffer;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: process.env.NODE_ENV === 'test' ? 'json' : 'jsonb' })
   argon2Params: {
     m: number;
     t: number;
     p: number;
   };
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({
+    type: process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz',
+  })
   updatedAt: Date;
 }

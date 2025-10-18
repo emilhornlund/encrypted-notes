@@ -18,6 +18,9 @@
     "lint:fix": "concurrently \"yarn workspace @encrypted-notes/common run lint:fix\" \"yarn workspace @encrypted-notes/api run lint:fix\" \"yarn workspace @encrypted-notes/web run lint:fix\"",
     "test": "concurrently \"yarn workspace @encrypted-notes/common run test\" \"yarn workspace @encrypted-notes/api run test\" \"yarn workspace @encrypted-notes/web run test\"",
     "test:ci": "concurrently \"yarn workspace @encrypted-notes/common run test:ci\" \"yarn workspace @encrypted-notes/api run test:ci\" \"yarn workspace @encrypted-notes/web run test:ci\"",
+    "e2e": "concurrently \"yarn workspace @encrypted-notes/api run test:e2e\" \"yarn workspace @encrypted-notes/web run test:e2e\"",
+    "e2e:api": "yarn workspace @encrypted-notes/api run test:e2e",
+    "e2e:web": "yarn workspace @encrypted-notes/web run test:e2e",
     "verify": "yarn lint && yarn build && yarn test",
     "clean": "yarn workspace @encrypted-notes/common run clean && yarn workspace @encrypted-notes/api run clean && yarn workspace @encrypted-notes/web run clean"
   },

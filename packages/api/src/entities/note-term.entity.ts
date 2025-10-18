@@ -7,7 +7,7 @@ export class NoteTerm {
   @PrimaryColumn('uuid')
   noteId: string;
 
-  @PrimaryColumn({ type: 'bytea' })
+  @PrimaryColumn({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   termHash: Buffer;
 
   @ManyToOne(() => Note, (note) => note.terms, { onDelete: 'CASCADE' })

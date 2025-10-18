@@ -8,7 +8,7 @@ export class TagTerm {
   @PrimaryColumn('uuid')
   tagId: string;
 
-  @PrimaryColumn({ type: 'bytea' })
+  @PrimaryColumn({ type: process.env.NODE_ENV === 'test' ? 'blob' : 'bytea' })
   termHash: Buffer;
 
   @ManyToOne(() => Tag, (tag) => tag.terms, { onDelete: 'CASCADE' })

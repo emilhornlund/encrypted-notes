@@ -25,7 +25,7 @@ export class AuthService {
 
   async register(
     registerData: RegisterRequest
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: string; user: User }> {
     const { email, password } = registerData;
 
     // Check if user already exists
@@ -64,10 +64,12 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const accessToken = this._jwtService.sign(payload);
 
-    return { accessToken };
+    return { accessToken, user };
   }
 
-  async login(loginData: LoginRequest): Promise<{ accessToken: string }> {
+  async login(
+    loginData: LoginRequest
+  ): Promise<{ accessToken: string; user: User }> {
     const { email, password } = loginData;
 
     const user = await this._userRepository.findOne({ where: { email } });
@@ -83,7 +85,7 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const accessToken = this._jwtService.sign(payload);
 
-    return { accessToken };
+    return { accessToken, user };
   }
 
   async validateUser(userId: string): Promise<User | null> {
