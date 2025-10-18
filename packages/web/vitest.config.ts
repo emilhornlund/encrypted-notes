@@ -9,5 +9,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     testTimeout: 30000, // 30 seconds for crypto-heavy tests
+    exclude: ['tests/e2e/**'],
   },
 });

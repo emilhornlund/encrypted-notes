@@ -45,6 +45,7 @@ export const Sidebar: React.FC = () => {
     >
       <Box sx={{ p: 2 }}>
         <ListItemButton
+          onClick={() => navigate('/notes/new')}
           sx={{
             bgcolor: 'primary.main',
             color: 'primary.contrastText',
